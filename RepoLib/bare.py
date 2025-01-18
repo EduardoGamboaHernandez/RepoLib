@@ -30,6 +30,3 @@ class Bare(BaseRepo):
             repo_bare.description = description
         if remote:
             repo_bare.create_remote(remote[0], remote[1])
-
-        # inicializar el repositorio con el primer commit.
-        repo_bare.index.commit("init: initial commit")

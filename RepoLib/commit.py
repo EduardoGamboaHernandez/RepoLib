@@ -18,7 +18,7 @@ class Commit(RepoInit):
     def __init__(self, name_repo: str, path_repos: str) -> None:
         super().__init__(name_repo, path_repos)
 
-    def get_commit_list(self, branch: str) -> list[any]:
+    def get_commit_list(self, branch: str = "HEAD") -> list[any]:
         """
         obtiene los commits agrupados por fecha.
 
