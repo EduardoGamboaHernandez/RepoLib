@@ -15,4 +15,4 @@ pip install -r requirements-dev.txt
 ```
 
 **Consideraciones:**
-Para mantener buenas prácticas es necesario utilizar la librería [Ruff](https://docs.astral.sh/ruff/ "documentación de Ruff") para formatear el código  con el comando `ruff format`, y analiza  errores con el comando `fuff check`
+Para mantener buenas prácticas es necesario utilizar la librería [Ruff](https://docs.astral.sh/ruff/ "documentación de Ruff") para formatear el código  con el comando `ruff format`, y analiza  errores con el comando `ruff check`
