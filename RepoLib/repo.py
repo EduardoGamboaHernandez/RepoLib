@@ -1,4 +1,4 @@
-from base import RepoInit
+from .base import RepoInit
 
 
 class Repo(RepoInit):

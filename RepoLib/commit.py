@@ -1,4 +1,4 @@
-from base import RepoInit
+from .base import RepoInit
 
 
 class Commit(RepoInit):
@@ -62,7 +62,7 @@ class Commit(RepoInit):
                 date = ""
         return commits_list
 
-    def get_last_commit(self, branch: str) -> dict:
+    def get_last_commit(self, branch: str = "HEAD") -> dict:
         """
         obtiene el ultimo commit hecho en una rama especifica.
 
@@ -77,6 +77,6 @@ class Commit(RepoInit):
             "hash": commit.hexsha,
             "message": commit.message,
             "autor": commit.author.name,
-            "date": commit.committed_datetime
+            "date": commit.committed_datetime.strftime('%Y-%m-%d')
         }
         return commit_dict

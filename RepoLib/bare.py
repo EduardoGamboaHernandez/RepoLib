@@ -1,4 +1,4 @@
-from base import BaseRepo
+from .base import BaseRepo
 import git
 
 
@@ -24,7 +24,7 @@ class Bare(BaseRepo):
             remote (list[str]): Repositorio remoto a agregar donde
                 la posición 0 es el nombre y la posición 1 la URI.
         """
-        repo_bare = git.Repo.init(self.repo_path, bare=True, mkdir=True)
+        repo_bare = git.Repo.init(self.path_repo, bare=True, mkdir=True)
         if description:
             repo_bare.description = description
         if remote:
