@@ -14,6 +14,7 @@ class Commit(RepoInit):
         name_repo: nombre del repositorio específico.
         path_repos: carpeta en donde se almacena los repositorios.
     """
+
     def __init__(self, name_repo: str, path_repos: str) -> None:
         super().__init__(name_repo, path_repos)
 
@@ -39,23 +40,20 @@ class Commit(RepoInit):
             commited_datetime = commit.committed_datetime
             # si no hay ninguna fecha a la que se está agrupando se crea una nueva
             if date == "":
-                date = commited_datetime.strftime('%Y-%m-%d')
+                date = commited_datetime.strftime("%Y-%m-%d")
             # agrupación de commits según la fecha establecida
-            if commited_datetime.strftime('%Y-%m-%d') == date:
+            if commited_datetime.strftime("%Y-%m-%d") == date:
                 commit_object = {
                     "hash": commit.hexsha,
                     "message": commit.message,
                     "author": commit.committer.name,
-                    "stats": commit.stats.total
+                    "stats": commit.stats.total,
                 }
                 commits_obj_list.append(commit_object)
             # si la fecha ya no coincide se agrega el diccionario
             # de los comiits a la lista final
             else:
-                commits_dict = {
-                    "date": date,
-                    "commits": commits_obj_list
-                }
+                commits_dict = {"date": date, "commits": commits_obj_list}
                 commits_list.append(commits_dict)
                 # reinicio de la fecha y el diccionario con los commits agrupados
                 commits_obj_list = []
@@ -77,6 +75,6 @@ class Commit(RepoInit):
             "hash": commit.hexsha,
             "message": commit.message,
             "autor": commit.author.name,
-            "date": commit.committed_datetime.strftime('%Y-%m-%d')
+            "date": commit.committed_datetime.strftime("%Y-%m-%d"),
         }
         return commit_dict

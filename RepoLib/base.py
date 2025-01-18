@@ -16,6 +16,7 @@ class BaseRepo:
         path_repos: carpeta en donde se almacena los repositorios.
         path_repos: ruta absoluta del repositorio.
     """
+
     def __init__(self, name_repo: str, path_repos: str) -> None:
         # nombre y directorio donde estan los repositorios
         self.path_repos = path_repos
@@ -40,6 +41,7 @@ class RepoInit(BaseRepo):
         path_repos: ruta absoluta del repositorio.
         repo: objeto del repositorio
     """
+
     def __init__(self, name_repo, path_repos) -> None:
         super().__init__(name_repo, path_repos)
 

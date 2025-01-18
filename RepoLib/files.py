@@ -13,6 +13,7 @@ class Files(RepoInit):
         name_repo: nombre del repositorio específico.
         path_repos: carpeta en donde se almacena los repositorios.
     """
+
     def __init__(self, name_repo: str, path_repos: str) -> None:
         super().__init__(name_repo, path_repos)
 
@@ -28,8 +29,9 @@ class Files(RepoInit):
         Returns:
             dict: diccionario con el árbol de archivos del commit
         """
+
         def tree(tree_list) -> list:
-            """ funcion para hacer el arbol de archivos """
+            """funcion para hacer el arbol de archivos"""
             data = []
             for item in tree_list:
                 # poner en el diccionario la información básica
@@ -39,11 +41,11 @@ class Files(RepoInit):
                     "path": item.path,
                 }
                 # añadir información según el tipo de objeto que sea
-                if item.type == 'blob':
-                    obj['size'] = item.size
-                if item.type == 'tree':
+                if item.type == "blob":
+                    obj["size"] = item.size
+                if item.type == "tree":
                     if iterate:
-                        obj['content'] = tree(item)
+                        obj["content"] = tree(item)
                 data.append(obj)
             return data
 
@@ -68,8 +70,5 @@ class Files(RepoInit):
         tree = commit.tree
         blob = tree[filename].data_stream
         # Decodificar a UTF-8, ajustar según la codificación
-        content = str(blob.read().decode('utf-8'))
-        return {
-            "name": file_basename,
-            "content": content
-        }
+        content = str(blob.read().decode("utf-8"))
+        return {"name": file_basename, "content": content}

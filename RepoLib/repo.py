@@ -13,10 +13,11 @@ class Repo(RepoInit):
         name_repo: nombre del repositorio específico.
         path_repos: carpeta en donde se almacena los repositorios.
     """
+
     def __init__(self, name_repo: str, path_repos: str) -> None:
         super().__init__(name_repo, path_repos)
 
-    def get_info(self, branch: str = 'HEAD'):
+    def get_info(self, branch: str = "HEAD"):
         """
         retorna un diccionario con la informacion de un repositorio
 
@@ -33,7 +34,7 @@ class Repo(RepoInit):
                 "description": self.repo.description,
                 "brranches": [branch.name for branch in self.repo.branches],
                 "active_branch": self.repo.active_branch.name,
-                "total_commits": len(list(self.repo.iter_commits(branch)))
+                "total_commits": len(list(self.repo.iter_commits(branch))),
             }
         return info_repo
 
@@ -47,8 +48,5 @@ class Repo(RepoInit):
         tags = []
         if self.repo.bare:
             for tag in self.repo.tags:
-                tags.append({
-                    "name": tag.name,
-                    "commit": tag.commit.hexsha
-                })
+                tags.append({"name": tag.name, "commit": tag.commit.hexsha})
         return tags

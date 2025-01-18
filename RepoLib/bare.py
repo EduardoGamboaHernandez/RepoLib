@@ -12,6 +12,7 @@ class Bare(BaseRepo):
         name_repo: nombre del repositorio específico.
         path_repos: carpeta en donde se almacena los repositorios.
     """
+
     def __init__(self, name_repo: str, path_repos: str) -> None:
         super().__init__(name_repo, path_repos)
 
