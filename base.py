@@ -44,4 +44,4 @@ class RepoInit(BaseRepo):
         super().__init__(name_repo, path_repos)
 
         # objeto del repositorio para manipular
-        self.repo = git.Repo(self.repo_path)
+        self.repo = git.Repo(self.path_repo)
