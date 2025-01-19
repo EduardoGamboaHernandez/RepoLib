@@ -1,4 +1,5 @@
 from .base import RepoInit
+import git
 
 
 class Commit(RepoInit):
@@ -28,7 +29,11 @@ class Commit(RepoInit):
         Returns:
             list[any]: lista de los commits agrupados por fecha.
         """
-        commits = list(self.repo.iter_commits(branch))
+        commits = []
+        try:
+            commits = list(self.repo.iter_commits(branch))
+        except git.exc.GitCommandError as e:
+            print(e)
         # lista que contienen todas las agrupaciones
         commits_list = []
         # fecha en formato año-mes-dia
