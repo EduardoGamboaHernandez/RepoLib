@@ -168,7 +168,7 @@ class RepoLib:
         Returns:
             dict: el ultimo commit de la rama.
         """
-        commit = list(self.repo.iter_commits(branch, max_count=1))[0]
+        commit = self.repo.commit(f"{branch}~0")
         commit_dict = {
             "hash": commit.hexsha,
             "message": commit.message,
@@ -191,3 +191,42 @@ class RepoLib:
             repo_bare.description = description
         if remote:
             repo_bare.create_remote(remote[0], remote[1])
+
+    def diff_commits(
+        self, commitSHA_a: str = None, commitSHA_b: str = None, branch: str = "HEAD"
+    ):
+        if not commitSHA_a:
+            commitSHA_a = self.repo.commit(f"{branch}~0")
+        else:
+            commitSHA_a = self.repo.commit(commitSHA_a)
+
+        if not commitSHA_b:
+            commitSHA_b = self.repo.commit(f"{branch}~1")
+        else:
+            commitSHA_b = self.repo.commit(commitSHA_b)
+
+        diff = commitSHA_b.diff(commitSHA_a)
+
+        changes_dict = {
+            "a_hexsha": commitSHA_a.hexsha,
+            "b_hexsha": commitSHA_b.hexsha,
+            "changes": [],
+        }
+
+        for change in diff:
+            change_dict = {
+                "type": change.change_type,
+            }
+
+            if change.change_type == "R":
+                change_dict["data"] = {
+                    "rename_from": change.rename_from,
+                    "rename_to": change.rename_to,
+                }
+            else:
+                filename = change.a_path if change.a_path else change.b_path
+                change_dict["data"] = {"filename": filename}
+
+            changes_dict["changes"].append(change_dict)
+
+        return changes_dict
