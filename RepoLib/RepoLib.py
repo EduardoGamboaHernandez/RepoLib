@@ -24,10 +24,13 @@ class RepoLib:
         # ruta completa del repositorio bare
         self.path_repo = os.path.join(self.path_repos, f"{self.name_repo}.git")
 
-    def init(self):
+    def init(self) -> None:
+        """
+        función para iniciar el repositorio Bare y poder obtener sus datos
+        """
         self.repo = git.Repo(self.path_repo)
 
-    def get_info(self, branch: str = "HEAD"):
+    def get_info(self, branch: str = "HEAD") -> dict[str, any]:
         """
         retorna un diccionario con la informacion de un repositorio
 
@@ -67,7 +70,7 @@ class RepoLib:
         commit o solo los primeros archivos y carpetas
 
         Args:
-            commitSHA (str): hexsha del comit para consultar
+            commitSHA (str): hexsha del commit para consultar
             iterate (str): sí es True devuelve el contenido total de archivos y carpetas
 
         Returns:
@@ -103,7 +106,7 @@ class RepoLib:
         retorna el contenido de un archivo de un commit.
 
         Args:
-            commitSHA (str): hexsha del comit para buscar el archivo
+            commitSHA (str): hexsha del commit para buscar el archivo
             filename (str): nombre del archivo a consultar
 
         Returns:
@@ -192,18 +195,21 @@ class RepoLib:
         if remote:
             repo_bare.create_remote(remote[0], remote[1])
 
-    def diff_commits(
-        self, commitSHA_a: str = None, commitSHA_b: str = None, branch: str = "HEAD"
-    ):
-        if not commitSHA_a:
-            commitSHA_a = self.repo.commit(f"{branch}~0")
-        else:
-            commitSHA_a = self.repo.commit(commitSHA_a)
+    def diff_commits(self, commitSHA_a: str, commitSHA_b: str) -> dict[str, any]:
+        """
+        retorna una diccionario de diferencias entre dos commits.
 
-        if not commitSHA_b:
-            commitSHA_b = self.repo.commit(f"{branch}~1")
-        else:
-            commitSHA_b = self.repo.commit(commitSHA_b)
+        Args:
+            commitSHA_a (str): primer commit a comparar
+            commitSHA_b (str): segundo commit a comparar
+
+        Returns:
+            dict: diccionario de las diferencias entre dos commits
+        """
+
+        commitSHA_a = self.repo.commit(commitSHA_a)
+
+        commitSHA_b = self.repo.commit(commitSHA_b)
 
         diff = commitSHA_b.diff(commitSHA_a)
 
