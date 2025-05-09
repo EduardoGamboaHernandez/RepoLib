@@ -61,7 +61,12 @@ class RepoLib:
         tags = []
         if self.repo.bare:
             for tag in self.repo.tags:
-                tags.append({"name": tag.name, "commit": tag.commit.hexsha})
+                tags_dict = {
+                    "name": tag.name,
+                    "message": tag.tag.message,
+                    "commit": tag.commit.hexsha,
+                }
+                tags.append(tags_dict)
         return tags
 
     def get_tree(self, commitSHA: str, iterate: bool = False) -> list:
