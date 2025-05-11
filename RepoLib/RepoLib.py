@@ -200,7 +200,7 @@ class RepoLib:
         if remote:
             repo_bare.create_remote(remote[0], remote[1])
 
-    def diff_commits(self, commitSHA_a: str, commitSHA_b: str) -> dict[str, any]:
+    def diff_commits(self, commitSHA_a: str, commitSHA_b: str = None) -> dict[str, any]:
         """
         retorna una diccionario de diferencias entre dos commits.
 
@@ -214,7 +214,10 @@ class RepoLib:
 
         commitSHA_a = self.repo.commit(commitSHA_a)
 
-        commitSHA_b = self.repo.commit(commitSHA_b)
+        if commitSHA_b:
+            commitSHA_b = self.repo.commit(commitSHA_b)
+        else:
+            commitSHA_b = commitSHA_a.parents[0]
 
         diff = commitSHA_b.diff(commitSHA_a)
 
