@@ -177,10 +177,27 @@ class RepoLib:
             dict: el ultimo commit de la rama.
         """
         commit = self.repo.commit(f"{branch}~0")
+        return self._commit_dict(commit)
+
+    def get_commit_info(self, commitSHA: str) -> dict:
+        """
+        obtiene informacion de un commit.
+
+        Args:
+            commitSHA (str): sha del commit.
+
+        Returns:
+            dict: el ultimo commit de la rama.
+        """
+
+        commit = self.repo.commit(commitSHA)
+        return self._commit_dict(commit)
+
+    def _commit_dict(self, commit):
         commit_dict = {
             "hash": commit.hexsha,
             "message": commit.message,
-            "autor": commit.author.name,
+            "author": commit.author.name,
             "date": commit.committed_datetime.strftime("%Y-%m-%d"),
         }
         return commit_dict
